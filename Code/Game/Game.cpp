@@ -969,9 +969,9 @@ void Game::Render() const
 	m_mainCamera->SetModelMatrix(camTransform);
 
 	//For regular PhysX
-	//g_renderContext->BeginCamera(*m_mainCamera); 
+	g_renderContext->BeginCamera(*m_mainCamera); 
 	//For Car PhysX (Vehicle SDK)
-	g_renderContext->BeginCamera(*m_carCamera);
+	//g_renderContext->BeginCamera(*m_carCamera);
 
 	g_renderContext->ClearColorTargets(Rgba(ui_cameraClearColor[0], ui_cameraClearColor[1], ui_cameraClearColor[2], 1.f));
 
@@ -991,7 +991,7 @@ void Game::Render() const
 		g_renderContext->EnableDirectionalLight();
 	}
 
-	//RenderUsingMaterial();
+	RenderUsingMaterial();
 
 	//Render the Quad
 	g_renderContext->BindMaterial(m_defaultMaterial);
@@ -1028,7 +1028,7 @@ void Game::Render() const
 //------------------------------------------------------------------------------------------------------------------------------
 void Game::RenderUsingMaterial() const
 {
-	g_renderContext->BindMaterial(m_testMaterial);
+	g_renderContext->BindMaterial(m_couchMaterial);
 
 	//Render the cube
 	g_renderContext->SetModelMatrix(m_cubeTransform);
@@ -1045,6 +1045,13 @@ void Game::RenderUsingMaterial() const
 	//Render the capsule here
 	g_renderContext->SetModelMatrix(m_capsuleModel);
 	g_renderContext->DrawMesh(m_capsule);
+
+	//Render mod kit pieces here
+	g_renderContext->SetModelMatrix(Matrix44::IDENTITY);
+	g_renderContext->DrawMesh(m_corner1x1Mesh);
+
+	g_renderContext->DrawMesh(m_corner2x2Mesh);
+
 }
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -1694,7 +1701,7 @@ bool Game::IsAlive()
 //------------------------------------------------------------------------------------------------------------------------------
 void Game::LoadGameMaterials()
 {
-	m_testMaterial = g_renderContext->CreateOrGetMaterialFromFile(m_materialPath);
+	m_couchMaterial = g_renderContext->CreateOrGetMaterialFromFile(m_couchMaterialPath);
 	m_defaultMaterial = g_renderContext->CreateOrGetMaterialFromFile(m_defaultMaterialPath);
 }
 
@@ -1838,6 +1845,14 @@ void Game::CreateInitialMeshes()
 	m_carModel = g_renderContext->CreateOrGetMeshFromFile(m_carMeshPath);
 	m_wheelModel = g_renderContext->CreateOrGetMeshFromFile(m_wheelMeshPath);
 	m_wheelFlippedModel = g_renderContext->CreateOrGetMeshFromFile(m_wheelFlippedMeshPath);
+
+	m_corner2x2Mesh = g_renderContext->CreateOrGetMeshFromFile(m_corner2x2Path);
+	m_corner1x1Mesh = g_renderContext->CreateOrGetMeshFromFile(m_corner1x1Path);
+	m_corner3x3Mesh = g_renderContext->CreateOrGetMeshFromFile(m_corner3x3Path);
+
+	m_jumRampMesh = g_renderContext->CreateOrGetMeshFromFile(m_jumpRampPath);
+	m_laneSwitchMesh = g_renderContext->CreateOrGetMeshFromFile(m_laneSwitchPath);
+	m_straightMesh = g_renderContext->CreateOrGetMeshFromFile(m_straightPath);
 }
 
 //------------------------------------------------------------------------------------------------------------------------------

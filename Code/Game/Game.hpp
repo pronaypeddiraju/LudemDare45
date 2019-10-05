@@ -138,12 +138,43 @@ public:
 	std::string							m_boxTexturePath = "woodcrate.jpg";
 	std::string							m_sphereTexturePath = "2k_earth_daymap.jpg";
 	std::string							m_xmlShaderPath = "default_unlit.xml";
-	std::string							m_materialPath = "couch.mat";
+	std::string							m_couchMaterialPath = "couch.mat";
 	std::string							m_defaultMaterialPath = "default.mat";
+
+	//------------------------------------------------------------------------------------------------------------------------------
+	//PhysX Car
+	//------------------------------------------------------------------------------------------------------------------------------
 	std::string							m_carMeshPath = "Car/Car.mesh";	
 	std::string							m_wheelMeshPath = "Car/Wheel.mesh";
 	std::string							m_wheelFlippedMeshPath = "Car/WheelFlipped.mesh";
 
+	GPUMesh*							m_carModel = nullptr;
+	Vec4								m_offsetCarBody = Vec4(0.f, -0.9f, 0.f, 0.f);
+	GPUMesh*							m_wheelModel = nullptr;
+	GPUMesh*							m_wheelFlippedModel = nullptr;
+	TextureView*						m_carDiffuse = nullptr;
+	TextureView*						m_carNormal = nullptr;
+
+	//------------------------------------------------------------------------------------------------------------------------------
+	//RaceTrack mod kit pieces
+	//------------------------------------------------------------------------------------------------------------------------------
+	std::string							m_corner1x1Path = "RaceTrack/RaceTrackCorner1x1.obj";
+	std::string							m_corner2x2Path = "RaceTrack/RaceTrackCorner2x2.obj";
+	std::string							m_corner3x3Path = "RaceTrack/RaceTrackCorner3x3.obj";
+
+	GPUMesh*							m_corner1x1Mesh = nullptr;
+	GPUMesh*							m_corner2x2Mesh = nullptr;
+	GPUMesh*							m_corner3x3Mesh = nullptr;
+
+	std::string							m_jumpRampPath = "RaceTrack/RaceTrackRamp.obj";
+	std::string							m_straightPath = "RaceTrack/RaceTrackStraightBlock.obj";
+	std::string							m_laneSwitchPath = "RaceTrack/RaceTrackLaneSwitch.obj";
+
+	GPUMesh*							m_jumRampMesh = nullptr;
+	GPUMesh*							m_straightMesh = nullptr;
+	GPUMesh*							m_laneSwitchMesh = nullptr;
+
+	//------------------------------------------------------------------------------------------------------------------------------
 	Camera*								m_mainCamera = nullptr;
 	Camera*								m_devConsoleCamera = nullptr;
 	Rgba*								m_clearScreenColor = nullptr;
@@ -171,13 +202,6 @@ public:
 	GPUMesh*							m_capsule = nullptr;
 	Matrix44							m_capsuleModel;
 
-	GPUMesh*							m_carModel = nullptr;
-	Vec4								m_offsetCarBody = Vec4(0.f, -0.9f, 0.f, 0.f);
-	GPUMesh*							m_wheelModel = nullptr;
-	GPUMesh*							m_wheelFlippedModel = nullptr;
-	TextureView*						m_carDiffuse = nullptr;
-	TextureView*						m_carNormal = nullptr;
-
 	//Lighting Assignment
 	int									m_lightSlot;
 	float								m_ambientIntensity = 1.f;
@@ -197,7 +221,7 @@ public:
 	float								m_ySpeed = 2.f;
 
 	//Material
-	Material*							m_testMaterial = nullptr;
+	Material*							m_couchMaterial = nullptr;
 	Material*							m_defaultMaterial = nullptr;
 	bool								m_useMaterial = true;
 

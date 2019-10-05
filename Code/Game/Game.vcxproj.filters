@@ -22,9 +22,6 @@
     <ClCompile Include="Main_Windows.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="PhysXGame.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="CarController.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
@@ -46,9 +43,6 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="EngineBuildPreferences.hpp">
-      <Filter>Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysXGame.hpp">
       <Filter>Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="CarController.hpp" />
