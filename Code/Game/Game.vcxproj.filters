@@ -28,6 +28,18 @@
     <ClCompile Include="CarCamera.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="FastWFC\WFCEntry.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="FastWFC\WFC.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="FastWFC\WFCPropagator.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="FastWFC\WFCWave.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.hpp">
@@ -47,5 +59,16 @@
     </ClInclude>
     <ClInclude Include="CarController.hpp" />
     <ClInclude Include="CarCamera.hpp" />
+    <ClInclude Include="FastWFC\WFCEntry.hpp" />
+    <ClInclude Include="FastWFC\WFC.hpp" />
+    <ClInclude Include="FastWFC\WFCDirection.hpp" />
+    <ClInclude Include="FastWFC\WFCOverlappingModel.hpp" />
+    <ClInclude Include="FastWFC\WFCPropagator.hpp" />
+    <ClInclude Include="FastWFC\WFCWave.hpp" />
+    <ClInclude Include="FastWFC\WFCArray3D.hpp" />
+    <ClInclude Include="FastWFC\WFCArray2D.hpp" />
+    <ClInclude Include="FastWFC\WFCImage.hpp" />
+    <ClInclude Include="FastWFC\WFCColor.hpp" />
+    <ClInclude Include="FastWFC\WFCTilingModel.hpp" />
   </ItemGroup>
 </Project>

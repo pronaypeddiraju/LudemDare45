@@ -27,6 +27,7 @@
 #include "Engine/Renderer/Shader.hpp"
 #include "Engine/Renderer/TextureView.hpp"
 #include "Engine/PhysXSystem/PhysXVehicleFilterShader.hpp"
+#include "Game/FastWFC/WFCEntry.hpp"
 //PhysX Includes
 //#include "ThirdParty/PhysX/include/PxPhysicsAPI.h"
 
@@ -93,6 +94,8 @@ void Game::StartUp()
 
 	Vec3 camEuler = Vec3(-12.5f, -196.f, 0.f);
 	m_mainCamera->SetEuler(camEuler);
+
+	WFCEntryPoint();
 }
 
 //------------------------------------------------------------------------------------------------------------------------------
