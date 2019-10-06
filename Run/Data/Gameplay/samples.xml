@@ -1,4 +1,11 @@
 <samples>
+	<simpletiled name="RaceTrack" subset="Standard" width="50" height="50" periodic="false"/>	
+	<simpletiled name="RaceTrack" subset="RampLess" width="50" height="50" periodic="false"/>	
+	<simpletiled name="RaceTrack" subset="DenseCorners" width="50" height="50" periodic="false"/>	
+	<simpletiled name="RaceTrack" subset="MediumTurnsAndStraights" width="50" height="50" periodic="false"/>
+	<simpletiled name="RaceTrack" subset="TightTurnsAndStraights" width="50" height="50" periodic="false"/>	
+	<simpletiled name="RaceTrack" subset="CurvyRoad" width="50" height="50" periodic="false"/>	
+
 	<simpletiled name="Knots" subset="Standard" width="24" height="24" periodic="True"/>
 	<simpletiled name="Knots" subset="Dense" width="24" height="24" periodic="True"/>	
 	<simpletiled name="Knots" subset="Crossless" width="24" height="24"/>
