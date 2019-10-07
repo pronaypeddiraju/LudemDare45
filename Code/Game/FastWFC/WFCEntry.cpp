@@ -64,13 +64,13 @@ std::optional<std::unordered_set<std::string>> ReadSubsetNames(XMLElement* root,
 	}
 	
 	XMLElement* subset_node = subsetsNode->FirstChildElement("subset");
-	
+
 	while (subsetsNode && ParseXmlAttribute(*subset_node, "name") != subset)
 	{
 		subset_node = subset_node->NextSiblingElement("subset");
 	}
 
-	if (!subset_node)
+	if (subset_node == nullptr)
 	{
 		return std::nullopt;
 	}

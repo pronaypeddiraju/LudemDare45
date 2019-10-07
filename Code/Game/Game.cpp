@@ -972,9 +972,9 @@ void Game::Render() const
 	m_mainCamera->SetModelMatrix(camTransform);
 
 	//For regular PhysX
-	g_renderContext->BeginCamera(*m_mainCamera); 
+	//g_renderContext->BeginCamera(*m_mainCamera); 
 	//For Car PhysX (Vehicle SDK)
-	//g_renderContext->BeginCamera(*m_carCamera);
+	g_renderContext->BeginCamera(*m_carCamera);
 
 	g_renderContext->ClearColorTargets(Rgba(ui_cameraClearColor[0], ui_cameraClearColor[1], ui_cameraClearColor[2], 1.f));
 
