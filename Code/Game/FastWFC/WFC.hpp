@@ -26,11 +26,13 @@ private:
 	//The propagator, used to propagate the information in the wave.
 	Propagator propagator;
 
+	//Cached output patterns from WFC
+	Array2D<unsigned> cached_output_patterns;
 
 	//Transform the wave to a valid output (a 2d array of patterns that aren't in
 	//contradiction). This function should be used only when all cell of the wave
 	//are defined.
-	Array2D<unsigned> WaveToOutput() const noexcept;
+	Array2D<unsigned> WaveToOutput() noexcept;
 
 public:
 

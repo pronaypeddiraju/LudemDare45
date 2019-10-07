@@ -278,10 +278,15 @@ void ReadSimpleTiledInstance(tinyxml2::XMLElement* node, int problemIndex, const
 
 		TilingWFC<Color> wfc(tiles, neighborsIDs, height, width, { periodicOutput }, seed);
 
-		std::optional<Array2D<Color>> success = wfc.run();
+		std::optional<Array2D<Color>> success = wfc.Run();
 		if (success.has_value()) 
 		{
 			WriteImageAsPNG(outFolderPath + name + "_" + subset + "_" + std::to_string(test) + ".png", *success);
+
+			const std::vector<std::pair<uint, uint>>& idToOrientedTile = wfc.GetIDToOrientedTile();
+			const std::vector<std::vector<uint>>& orientedTileIds = wfc.GetOrientedTileIDs();
+
+			TODO("Read the generated patterns and spawn track pieces");
 
 			DebuggerPrintf("\n Finished solving tiling problem: %s subset: %s", name.c_str(), subset.c_str());
 			g_LogSystem->Logf("WFC System", "\n Finished solving tiling problem: %s subset: %s", name.c_str(), subset.c_str());

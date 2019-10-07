@@ -23,7 +23,7 @@ namespace
 }
 
 
-Array2D<unsigned> WFC::WaveToOutput() const noexcept
+Array2D<unsigned> WFC::WaveToOutput() noexcept
 {
 	Array2D<unsigned> output_patterns(wave.height, wave.width);
 	for (unsigned i = 0; i < wave.size; i++)
@@ -33,9 +33,11 @@ Array2D<unsigned> WFC::WaveToOutput() const noexcept
 			if (wave.Get(i, k))
 			{
 				output_patterns.m_data[i] = k;
+				cached_output_patterns.m_data[i] = k;
 			}
 		}
 	}
+
 	return output_patterns;
 }
 
@@ -43,7 +45,8 @@ WFC::WFC(bool periodic_output, int seed, std::vector<double> patterns_frequencie
 	: gen(seed), patterns_frequencies(normalize(patterns_frequencies)),
 	wave(wave_height, wave_width, patterns_frequencies),
 	nb_patterns((unsigned)propagator.size()),
-	propagator(wave.height, wave.width, periodic_output, propagator)
+	propagator(wave.height, wave.width, periodic_output, propagator),
+	cached_output_patterns(wave_height, wave_width)
 {
 
 }
