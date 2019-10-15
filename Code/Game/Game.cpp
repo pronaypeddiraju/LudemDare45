@@ -1049,10 +1049,17 @@ void Game::RenderUsingMaterial() const
 	g_renderContext->SetModelMatrix(m_capsuleModel);
 	g_renderContext->DrawMesh(m_capsule);
 
+	g_renderContext->BindMaterial(m_defaultMaterial);
+	
 	//Render mod kit pieces here
-	g_renderContext->SetModelMatrix(Matrix44::IDENTITY);
+	Matrix44 positionMatrix;
+	positionMatrix.MakeTranslation3D(Vec3(0.0f, 2.f, 5.f));
+	g_renderContext->SetModelMatrix(positionMatrix);
+
 	g_renderContext->DrawMesh(m_corner1x1Mesh);
 
+	positionMatrix.MakeTranslation3D(Vec3(5.0f, 2.f, 5.f));
+	g_renderContext->SetModelMatrix(positionMatrix);
 	g_renderContext->DrawMesh(m_corner2x2Mesh);
 
 }

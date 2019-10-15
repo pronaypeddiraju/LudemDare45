@@ -4,54 +4,54 @@
 namespace
 {
 	//Normalize a vector so the sum of its elements is equal to 1.0f
-	std::vector<double>& normalize(std::vector<double>& v)
+	std::vector<double>& normalize(std::vector<double>& vector)
 	{
-		double sum_weights = 0.0;
-		for (double weight : v)
+		double sumWeights = 0.0;
+		for (double weight : vector)
 		{
-			sum_weights += weight;
+			sumWeights += weight;
 		}
 
-		double inv_sum_weights = 1.0 / sum_weights;
-		for (double& weight : v)
+		double invSumWeights = 1.0 / sumWeights;
+		for (double& weight : vector)
 		{
-			weight *= inv_sum_weights;
+			weight *= invSumWeights;
 		}
 
-		return v;
+		return vector;
 	}
 }
 
 
-Array2D<unsigned> WFC::WaveToOutput() noexcept
+Array2D<uint> WFC::WaveToOutput() //noexcept
 {
-	Array2D<unsigned> output_patterns(wave.height, wave.width);
-	for (unsigned i = 0; i < wave.size; i++)
+	Array2D<uint> outputPatterns(m_wave.height, m_wave.width);
+	for (uint i = 0; i < m_wave.size; i++)
 	{
-		for (unsigned k = 0; k < nb_patterns; k++)
+		for (uint k = 0; k < m_numPatterns; k++)
 		{
-			if (wave.Get(i, k))
+			if (m_wave.Get(i, k))
 			{
-				output_patterns.m_data[i] = k;
-				cached_output_patterns.m_data[i] = k;
+				outputPatterns.m_data[i] = k;
+				m_cachedOutputPatterns.m_data[i] = k;
 			}
 		}
 	}
 
-	return output_patterns;
+	return outputPatterns;
 }
 
-WFC::WFC(bool periodic_output, int seed, std::vector<double> patterns_frequencies, Propagator::PropagatorState propagator, unsigned wave_height, unsigned wave_width) noexcept
-	: gen(seed), patterns_frequencies(normalize(patterns_frequencies)),
-	wave(wave_height, wave_width, patterns_frequencies),
-	nb_patterns((unsigned)propagator.size()),
-	propagator(wave.height, wave.width, periodic_output, propagator),
-	cached_output_patterns(wave_height, wave_width)
+WFC::WFC(bool periodicOutputs, int seed, std::vector<double> patternsFrequencies, Propagator::PropagatorState propagator, uint waveHeight, uint waveWidth) //noexcept
+	: m_randomGenerator(seed), m_patternFrequencies(normalize(patternsFrequencies)),
+	m_wave(waveHeight, waveWidth, patternsFrequencies),
+	m_numPatterns((uint)propagator.size()),
+	m_propagator(m_wave.height, m_wave.width, periodicOutputs, propagator),
+	m_cachedOutputPatterns(waveHeight, waveWidth)
 {
 
 }
 
-std::optional<Array2D<unsigned>> WFC::Run() noexcept
+std::optional<Array2D<uint>> WFC::Run() //noexcept
 {
 	while (true)
 	{
@@ -68,15 +68,15 @@ std::optional<Array2D<unsigned>> WFC::Run() noexcept
 		}
 
 		// Propagate the information.
-		propagator.Propagate(wave);
+		m_propagator.Propagate(m_wave);
 	}
 }
 
 
-WFC::ObserveStatus WFC::Observe() noexcept
+WFC::ObserveStatus WFC::Observe() //noexcept
 {
 	// Get the cell with lowest entropy.
-	int argmin = wave.GetMinEntropy(gen);
+	int argmin = m_wave.GetMinEntropy(m_randomGenerator);
 
 	// If there is a contradiction, the algorithm has failed.
 	if (argmin == -2)
@@ -94,18 +94,18 @@ WFC::ObserveStatus WFC::Observe() noexcept
 
 	// Choose an element according to the pattern distribution
 	double s = 0;
-	for (unsigned k = 0; k < nb_patterns; k++)
+	for (uint k = 0; k < m_numPatterns; k++)
 	{
-		s += wave.Get(argmin, k) ? patterns_frequencies[k] : 0;
+		s += m_wave.Get(argmin, k) ? m_patternFrequencies[k] : 0;
 	}
 
 	std::uniform_real_distribution<> dis(0, s);
-	double random_value = dis(gen);
-	unsigned chosen_value = nb_patterns - 1;
+	double random_value = dis(m_randomGenerator);
+	uint chosen_value = m_numPatterns - 1;
 
-	for (unsigned k = 0; k < nb_patterns; k++)
+	for (uint k = 0; k < m_numPatterns; k++)
 	{
-		random_value -= wave.Get(argmin, k) ? patterns_frequencies[k] : 0;
+		random_value -= m_wave.Get(argmin, k) ? m_patternFrequencies[k] : 0;
 		if (random_value <= 0)
 		{
 			chosen_value = k;
@@ -114,12 +114,12 @@ WFC::ObserveStatus WFC::Observe() noexcept
 	}
 
 	// And define the cell with the pattern.
-	for (unsigned k = 0; k < nb_patterns; k++)
+	for (uint k = 0; k < m_numPatterns; k++)
 	{
-		if (wave.Get(argmin, k) != (k == chosen_value))
+		if (m_wave.Get(argmin, k) != (k == chosen_value))
 		{
-			propagator.AddToPropagator(argmin / wave.width, argmin % wave.width, k);
-			wave.Set(argmin, k, false);
+			m_propagator.AddToPropagator(argmin / m_wave.width, argmin % m_wave.width, k);
+			m_wave.Set(argmin, k, false);
 		}
 	}
 

@@ -6,64 +6,66 @@
 #include "Game/FastWFC/WFCPropagator.hpp"
 #include "Game/FastWFC/WFCWave.hpp"
 
+typedef unsigned int uint;
+
 //Class containing the generic WFC algorithm.
 //------------------------------------------------------------------------------------------------------------------------------
 class WFC
 {
 private:
 	//Random num generator
-	std::minstd_rand gen;
+	std::minstd_rand m_randomGenerator;
 
 	//The distribution of the patterns as given in input.
-	const std::vector<double> patterns_frequencies;
+	const std::vector<double> m_patternFrequencies;
 
 	//The wave, indicating which patterns can be put in which cell.
-	Wave wave;
+	Wave m_wave;
 
 	//The number of distinct patterns.
-	const unsigned nb_patterns;
+	const uint m_numPatterns;
 
 	//The propagator, used to propagate the information in the wave.
-	Propagator propagator;
+	Propagator m_propagator;
 
 	//Cached output patterns from WFC
-	Array2D<unsigned> cached_output_patterns;
+	Array2D<uint> m_cachedOutputPatterns;
 
 	//Transform the wave to a valid output (a 2d array of patterns that aren't in
 	//contradiction). This function should be used only when all cell of the wave
 	//are defined.
-	Array2D<unsigned> WaveToOutput() noexcept;
+	Array2D<uint> WaveToOutput();
 
 public:
 
-	WFC(bool periodic_output, int seed, std::vector<double> patterns_frequencies,
-		Propagator::PropagatorState propagator, unsigned wave_height,
-		unsigned wave_width)
-		noexcept;
+	WFC(bool periodicOutput, int seed, std::vector<double> patternFrequencies,
+		Propagator::PropagatorState propagator, uint waveHeight,
+		uint waveWidth);
 
 	//Run WFC and return a result if we succeed
-	std::optional<Array2D<unsigned>> Run() noexcept;
+	std::optional<Array2D<uint>> Run();
 
 	//Return value of observe
-	enum ObserveStatus {
+	enum ObserveStatus 
+	{
 		success,    // WFC has finished and has succeeded.
 		failure,    // WFC has finished and failed.
 		to_continue // WFC isn't finished.
 	};
 
 	//Define the value of the cell with lowest entropy.
-	ObserveStatus Observe() noexcept;
+	ObserveStatus Observe();
 
 	//Propagate information of the wave
-	void Propagate() noexcept { propagator.Propagate(wave); }
+	void Propagate() { m_propagator.Propagate(m_wave); }
 
 	//Remove a pattern form cell i,j
-	void RemoveWavePattern(unsigned i, unsigned j, unsigned pattern) noexcept
+	void RemoveWavePattern(uint i, uint j, uint pattern)
 	{
-		if (wave.Get(i, j, pattern))
+		if (m_wave.Get(i, j, pattern))
 		{
-			wave.Set(i, j, pattern, false);
-			propagator.AddToPropagator(i, j, pattern);
+			m_wave.Set(i, j, pattern, false);
+			m_propagator.AddToPropagator(i, j, pattern);
 		}
 	}
 };

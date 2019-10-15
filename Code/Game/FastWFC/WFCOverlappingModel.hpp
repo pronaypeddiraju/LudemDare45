@@ -170,7 +170,7 @@ private:
 				{
 					//unordered map insert returns a pair of iterator and bool 
 					std::pair<std::unordered_map<Array2D<Color>, uint>::iterator, bool> res;
-					res = patterns_id.insert(std::make_pair(symmetries[k], patterns.size()));
+					res = patterns_id.insert(std::make_pair(symmetries[k], (uint)patterns.size()));
 
 					// If the pattern already exist, we just have to increase its number
 					// of appearance.

@@ -5,7 +5,7 @@
 		<tile name="straightPiece" symmetry="I"/>
 		<tile name="empty" symmetry="X"/>
 		<tile name="rampPiece" symmetry="I"/>
- 	</tiles>
+	</tiles>
 	
 	<neighbors>
 		<!--
@@ -43,18 +43,20 @@
 		<neighbor left="straightPiece" right="rampPiece"/>
 		<neighbor left="straightPiece" right="mediumCorner 1"/>
 		<neighbor left="straightPiece" right="mediumCorner 2"/>
-		
-		<!--<neighbor left="straightPiece 1" right="straightPiece 1"/>
-		<neighbor left="straightPiece 1" right="rampPiece 1"/>-->
-		
+		<neighbor left="straightPiece 1" right="straightPiece 1"/>
+		<neighbor left="straightPiece 1" right="rampPiece 1"/>
+		<neighbor left="straightPiece 1" right="mediumCorner"/>
+		<neighbor left="straightPiece 1" right="mediumCorner 3"/>
+
 		<neighbor left="rampPiece" right="rampPiece"/>
 		<neighbor left="rampPiece" right="straightPiece"/>
 		<neighbor left="rampPiece" right="mediumCorner 1"/>
 		<neighbor left="rampPiece" right="mediumCorner 2"/>		
-		
-		<!--<neighbor left="rampPiece 1" right="rampPiece 1"/>	
-		<neighbor left="rampPiece 1" right="straightPiece 1"/>-->
-		
+		<neighbor left="rampPiece 1" right="rampPiece 1"/>	
+		<neighbor left="rampPiece 1" right="straightPiece 1"/>
+		<neighbor left="rampPiece 1" right="mediumCorner"/>
+		<neighbor left="rampPiece 1" right="mediumCorner 3"/>
+
 		<neighbor left="empty" right="empty"/>
 		<neighbor left="empty" right="straightPiece 1"/>
 		<neighbor left="empty" right="rampPiece 1"/>

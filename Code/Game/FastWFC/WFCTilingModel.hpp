@@ -93,7 +93,7 @@ template <typename T> struct Tile {
 		std::vector<std::vector<unsigned>> action_map(8,
 			std::vector<unsigned>(size));
 		for (size_t i = 0; i < size; ++i) {
-			action_map[0][i] = i;
+			action_map[0][i] = (uint)i;
 		}
 
 		for (size_t a = 1; a < 4; ++a) {
@@ -269,7 +269,7 @@ private:
 				{
 					if (dense_propagator[i][d][j]) 
 					{
-						propagator[i][d].push_back(j);
+						propagator[i][d].push_back((uint)j);
 					}
 				}
 			}

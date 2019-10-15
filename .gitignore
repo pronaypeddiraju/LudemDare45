@@ -29,6 +29,7 @@
 
 # Ignoring a complete folder (don't want my screenshot folder)
 data/screenshot/
+Run/Data/WFCResults/
 
 # =========================
 # Rest is just common ignores for most
