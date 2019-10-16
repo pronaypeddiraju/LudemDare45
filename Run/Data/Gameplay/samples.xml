@@ -359,7 +359,19 @@
 	<overlapping name="OfficeInteriorSection6"	N="3" width="7" height="5" periodicInput="false" periodic="false" symmetry="6"/>
 	<overlapping name="OfficeInteriorSection6"	N="3" width="7" height="5" periodicInput="false" periodic="false" symmetry="7"/>
 	<overlapping name="OfficeInteriorSection6"	N="5" width="7" height="5" periodicInput="false" periodic="false"/>
+
+<simpletiled name="OfficeInteriors" subset="Standard" width="1" height="1" periodic="false" periodicInput = "false"/>
+<simpletiled name="OfficeInteriors" subset="Standard" width="1" height="2" periodic="false" periodicInput = "false"/>
+<simpletiled name="OfficeInteriors" subset="Standard" width="2" height="1" periodic="false" periodicInput = "false"/>
+<simpletiled name="OfficeInteriors" subset="Standard" width="12" height="12" periodic="false" periodicInput = "false"/>	
+<simpletiled name="OfficeInteriors" subset="Standard" width="7" height="5" periodic="false" periodicInput = "false"/>	
+<simpletiled name="OfficeInteriors" subset="Standard" width="6" height="12" periodic="false" periodicInput = "false"/>	
+<simpletiled name="OfficeInteriors" subset="Standard" width="12" height="6" periodic="false" periodicInput = "false"/>	
+<simpletiled name="OfficeInteriors" subset="Standard" width="21" height="21" periodic="false" periodicInput = "false"/>	
+<simpletiled name="OfficeInteriors" subset="Standard" width="21" height="12" periodic="false" periodicInput = "false"/>	
+
 <simpletiled name="Summer" width="15" height="15"/>
+
 </samples>
 
 
