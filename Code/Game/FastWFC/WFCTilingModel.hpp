@@ -9,10 +9,14 @@
 //Represents how the tile should behace when it is rotated or reflected
 enum class Symmetry { X, T, I, L, backslash, P };
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Return the number of possible distinct orientations for a tile
 //Orientation is combination of rotations and reflections
-unsigned nb_of_possible_orientations(const Symmetry &symmetry) {
-	switch (symmetry) {
+//------------------------------------------------------------------------------------------------------------------------------
+unsigned NumPossibleOrientations(const Symmetry &symmetry)
+{
+	switch (symmetry)
+	{
 	case Symmetry::X:
 		return 1;
 	case Symmetry::I:
@@ -26,21 +30,20 @@ unsigned nb_of_possible_orientations(const Symmetry &symmetry) {
 	}
 }
 
-/**
- * A tile that can be placed on the board.
- */
-template <typename T> struct Tile {
+//------------------------------------------------------------------------------------------------------------------------------
+//A tile that can be placed on the board.
+template <typename T> struct Tile
+{
 	std::vector<Array2D<T>> data; // The different orientations of the tile
 	Symmetry symmetry;            // The symmetry of the tile
-	double weight; // Its weight on the distribution of presence of tiles
+	double weight;					// Its weight on the distribution of presence of tiles
 
-	/**
-	 * Generate the map associating an orientation id to the orientation
-	 * id obtained when rotating 90° anticlockwise the tile.
-	 */
-	static std::vector<unsigned>
-		generate_rotation_map(const Symmetry &symmetry) noexcept {
-		switch (symmetry) {
+	//Generate map associating an orientation id to the orientation
+	//id obtained when rotating tile by 90 degrees anticlockwise
+	static std::vector<unsigned> GenerateRotationMap(const Symmetry &symmetry)
+	{
+		switch (symmetry) 
+		{
 		case Symmetry::X:
 			return { 0 };
 		case Symmetry::I:
@@ -55,13 +58,12 @@ template <typename T> struct Tile {
 		}
 	}
 
-	/**
-	 * Generate the map associating an orientation id to the orientation
-	 * id obtained when reflecting the tile along the x axis.
-	 */
-	static std::vector<unsigned>
-		generate_reflection_map(const Symmetry &symmetry) noexcept {
-		switch (symmetry) {
+	//Generate map associating orientation id to the orientation
+	//id obtained when reflecting the tile along x axis
+	static std::vector<unsigned> GenerateReflectionMap(const Symmetry &symmetry)
+	{
+		switch (symmetry)
+		{
 		case Symmetry::X:
 			return { 0 };
 		case Symmetry::I:
@@ -78,50 +80,52 @@ template <typename T> struct Tile {
 		}
 	}
 
-	/**
-	 * Generate the map associating an orientation id and an action to the
-	 * resulting orientation id.
-	 * Actions 0, 1, 2, and 3 are 0°, 90°, 180°, and 270° anticlockwise rotations.
-	 * Actions 4, 5, 6, and 7 are actions 0, 1, 2, and 3 preceded by a reflection
-	 * on the x axis.
-	 */
-	static std::vector<std::vector<unsigned>>
-		generate_action_map(const Symmetry &symmetry) noexcept {
-		std::vector<unsigned> rotation_map = generate_rotation_map(symmetry);
-		std::vector<unsigned> reflection_map = generate_reflection_map(symmetry);
+	//Generate the map associating orientation id and an action to the resulting
+	//orientation id.
+	//Actions 0,1,2,3 are 0°,90°,180° and 270° degree anticlockwise rotations
+	//Actions 4,5,6,7 are 0,1,2,3 preceded by a reflection on the x axis
+	static std::vector<std::vector<unsigned>> GenerateActionMap(const Symmetry &symmetry)
+	{
+		std::vector<unsigned> rotation_map = GenerateRotationMap(symmetry);
+		std::vector<unsigned> reflection_map = GenerateReflectionMap(symmetry);
 		size_t size = rotation_map.size();
-		std::vector<std::vector<unsigned>> action_map(8,
-			std::vector<unsigned>(size));
-		for (size_t i = 0; i < size; ++i) {
+		std::vector<std::vector<unsigned>> action_map(8, std::vector<unsigned>(size));
+
+		for (size_t i = 0; i < size; ++i)
+		{
 			action_map[0][i] = (uint)i;
 		}
 
-		for (size_t a = 1; a < 4; ++a) {
-			for (size_t i = 0; i < size; ++i) {
+		for (size_t a = 1; a < 4; ++a)
+		{
+			for (size_t i = 0; i < size; ++i)
+			{
 				action_map[a][i] = rotation_map[action_map[a - 1][i]];
 			}
 		}
-		for (size_t i = 0; i < size; ++i) {
+
+		for (size_t i = 0; i < size; ++i)
+		{
 			action_map[4][i] = reflection_map[action_map[0][i]];
 		}
-		for (size_t a = 5; a < 8; ++a) {
-			for (size_t i = 0; i < size; ++i) {
+		
+		for (size_t a = 5; a < 8; ++a)
+		{
+			for (size_t i = 0; i < size; ++i)
+			{
 				action_map[a][i] = rotation_map[action_map[a - 1][i]];
 			}
 		}
 		return action_map;
 	}
 
-	/**
-	 * Generate all distincts rotations of a 2D array given its symmetries;
-	 */
-	static std::vector<Array2D<T>> GenerateOriented(Array2D<T> data,
-		Symmetry symmetry) noexcept 
+	//Generate all distincts rotations of a 2D array given its symmetries;
+	static std::vector<Array2D<T>> GenerateOriented(Array2D<T> data, Symmetry symmetry)
 	{
 		std::vector<Array2D<T>> oriented;
 		oriented.push_back(data);
 
-		switch (symmetry) 
+		switch (symmetry)
 		{
 		case Symmetry::I:
 		case Symmetry::backslash:
@@ -149,31 +153,29 @@ template <typename T> struct Tile {
 		return oriented;
 	}
 
-	/**
-	 * Create a tile with its differents orientations, its symmetries and its
-	 * weight on the distribution of tiles.
-	 */
-	Tile(std::vector<Array2D<T>> data, Symmetry symmetry, double weight) noexcept
+	//Create a tile with its different orientations, its symmetries and its
+	//weight on the distribution of tiles
+	Tile(std::vector<Array2D<T>> data, Symmetry symmetry, double weight)
 		: data(data), symmetry(symmetry), weight(weight) {}
 
-	/*
-	 * Create a tile with its base orientation, its symmetries and its
-	 * weight on the distribution of tiles.
-	 * The other orientations are generated with its first one.
-	 */
-	Tile(Array2D<T> data, Symmetry symmetry, double weight) noexcept
+	//Create a tile with its base orientation, its symmetries and its
+	//weight on the distribution of tiles.
+	//The other orientation are generated with its first one.
+	Tile(Array2D<T> data, Symmetry symmetry, double weight)
 		: data(GenerateOriented(data, symmetry)), symmetry(symmetry),
 		weight(weight) {}
 };
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Options needed for tiling wfc
-struct TilingWFCOptions 
+struct TilingWFCOptions
 {
 	bool periodic_output;
 };
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Class generating a new image with tiling WFC
-template <typename T> class TilingWFC 
+template <typename T> class TilingWFC
 {
 private:
 	//the distinct tiles
@@ -235,8 +237,8 @@ private:
 			unsigned orientation1 = std::get<1>(neighbor);
 			unsigned tile2 = std::get<2>(neighbor);
 			unsigned orientation2 = std::get<3>(neighbor);
-			std::vector<std::vector<unsigned>> action_map1 = Tile<T>::generate_action_map(tiles[tile1].symmetry);
-			std::vector<std::vector<unsigned>> action_map2 = Tile<T>::generate_action_map(tiles[tile2].symmetry);
+			std::vector<std::vector<unsigned>> action_map1 = Tile<T>::GenerateActionMap(tiles[tile1].symmetry);
+			std::vector<std::vector<unsigned>> action_map2 = Tile<T>::GenerateActionMap(tiles[tile2].symmetry);
 
 			auto add = [&](unsigned action, unsigned direction) 
 			{
@@ -279,7 +281,7 @@ private:
 	}
 
 	//Get probability of presence of tiles
-	static std::vector<double>	GetTilesWeight(const std::vector<Tile<T>> &tiles) 
+	static std::vector<double>	GetTilesWeight(const std::vector<Tile<T>> &tiles)
 	{
 		std::vector<double> frequencies;
 
@@ -294,7 +296,7 @@ private:
 	}
 
 	//Translate generic WFC result into image
-	Array2D<T> IDToTiling(Array2D<unsigned> ids) 
+	Array2D<T> IDToTiling(Array2D<unsigned> ids)
 	{
 		unsigned size = tiles[0].data[0].m_height;
 
@@ -335,9 +337,11 @@ public:
 			height, width) {}
 
 	//Run tiling WFC and return the result if succeeded
-	std::optional<Array2D<T>> Run() {
+	std::optional<Array2D<T>> Run() 
+	{
 		auto a = wfc.Run();
-		if (a == std::nullopt) {
+		if (a == std::nullopt) 
+		{
 			return std::nullopt;
 		}
 		return IDToTiling(*a);

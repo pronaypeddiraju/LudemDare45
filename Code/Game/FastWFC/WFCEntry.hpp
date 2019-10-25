@@ -1,5 +1,4 @@
 #pragma once
-
 #include <fstream>
 #include <vector>
 #include <string>
@@ -7,6 +6,7 @@
 #include "Engine/Core/XMLUtils/XMLUtils.hpp"
 #include "Engine/Commons/EngineCommon.hpp"
 
+//------------------------------------------------------------------------------------------------------------------------------
 struct WFCSettings_T
 {
 	const std::string configReadPath = "Data/Gameplay/";

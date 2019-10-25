@@ -1,6 +1,7 @@
 #include "Game/FastWFC/WFC.hpp"
 #include <limits>
 
+//------------------------------------------------------------------------------------------------------------------------------
 namespace
 {
 	//Normalize a vector so the sum of its elements is equal to 1.0f
@@ -22,8 +23,8 @@ namespace
 	}
 }
 
-
-Array2D<uint> WFC::WaveToOutput() //noexcept
+//------------------------------------------------------------------------------------------------------------------------------
+Array2D<uint> WFC::WaveToOutput() 
 {
 	Array2D<uint> outputPatterns(m_wave.height, m_wave.width);
 	for (uint i = 0; i < m_wave.size; i++)
@@ -41,17 +42,17 @@ Array2D<uint> WFC::WaveToOutput() //noexcept
 	return outputPatterns;
 }
 
-WFC::WFC(bool periodicOutputs, int seed, std::vector<double> patternsFrequencies, Propagator::PropagatorState propagator, uint waveHeight, uint waveWidth) //noexcept
+//------------------------------------------------------------------------------------------------------------------------------
+WFC::WFC(bool periodicOutputs, int seed, std::vector<double> patternsFrequencies, Propagator::PropagatorState propagator, uint waveHeight, uint waveWidth) 
 	: m_randomGenerator(seed), m_patternFrequencies(normalize(patternsFrequencies)),
 	m_wave(waveHeight, waveWidth, patternsFrequencies),
 	m_numPatterns((uint)propagator.size()),
 	m_propagator(m_wave.height, m_wave.width, periodicOutputs, propagator),
 	m_cachedOutputPatterns(waveHeight, waveWidth)
-{
+{}
 
-}
-
-std::optional<Array2D<uint>> WFC::Run() //noexcept
+//------------------------------------------------------------------------------------------------------------------------------
+std::optional<Array2D<uint>> WFC::Run() 
 {
 	while (true)
 	{
@@ -60,10 +61,10 @@ std::optional<Array2D<uint>> WFC::Run() //noexcept
 		ObserveStatus result = Observe();
 
 		// Check if the algorithm has terminated.
-		if (result == failure) {
+		if (result == FAILURE) {
 			return std::nullopt;
 		}
-		else if (result == success) {
+		else if (result == SUCCESS) {
 			return WaveToOutput();
 		}
 
@@ -72,8 +73,8 @@ std::optional<Array2D<uint>> WFC::Run() //noexcept
 	}
 }
 
-
-WFC::ObserveStatus WFC::Observe() //noexcept
+//------------------------------------------------------------------------------------------------------------------------------
+WFC::ObserveStatus WFC::Observe() 
 {
 	// Get the cell with lowest entropy.
 	int argmin = m_wave.GetMinEntropy(m_randomGenerator);
@@ -81,7 +82,7 @@ WFC::ObserveStatus WFC::Observe() //noexcept
 	// If there is a contradiction, the algorithm has failed.
 	if (argmin == -2)
 	{
-		return failure;
+		return FAILURE;
 	}
 
 	// If the lowest entropy is 0, then the algorithm has succeeded and
@@ -89,7 +90,7 @@ WFC::ObserveStatus WFC::Observe() //noexcept
 	if (argmin == -1)
 	{
 		WaveToOutput();
-		return success;
+		return SUCCESS;
 	}
 
 	// Choose an element according to the pattern distribution
@@ -123,5 +124,5 @@ WFC::ObserveStatus WFC::Observe() //noexcept
 		}
 	}
 
-	return to_continue;
+	return TO_CONTINUE;
 }

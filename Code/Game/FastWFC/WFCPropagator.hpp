@@ -42,11 +42,11 @@ private:
 	Array3D<std::array<int, 4>> compatible;
 
 	//compute compatible patterns in all directions
-	void InitializeCompatible() noexcept;
+	void InitializeCompatible();
 
 public:
 
-	Propagator(unsigned wave_height, unsigned wave_width, bool periodic_output, PropagatorState propagator_state) noexcept
+	Propagator(unsigned wave_height, unsigned wave_width, bool periodic_output, PropagatorState propagator_state)
 		: m_patternsSize((unsigned)propagator_state.size()),
 		m_propagator_state(propagator_state), m_waveWidth(wave_width),
 		m_waveHeight(wave_height), periodic_output(periodic_output),
@@ -57,7 +57,7 @@ public:
 
 	//Add an element to the propagator
 	//Called when wave.Get(y, x, pattern) is set to false
-	void AddToPropagator(unsigned y, unsigned x, unsigned pattern) noexcept
+	void AddToPropagator(unsigned y, unsigned x, unsigned pattern)
 	{
 		// All the direction are set to 0, since the pattern cannot be set in (y,x).
 		std::array<int, 4> temp = {};
@@ -66,5 +66,5 @@ public:
 	}
 
 	//Propagate information given from AddToPropagator
-	void Propagate(Wave &wave) noexcept;
+	void Propagate(Wave &wave);
 };

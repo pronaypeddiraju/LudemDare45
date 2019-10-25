@@ -3,7 +3,8 @@
 
 typedef unsigned int uint;
 
-void Propagator::InitializeCompatible() noexcept
+//------------------------------------------------------------------------------------------------------------------------------
+void Propagator::InitializeCompatible()
 {
 	std::array<int, 4> value;
 	// We compute the number of pattern compatible in all directions.
@@ -23,7 +24,8 @@ void Propagator::InitializeCompatible() noexcept
 	}
 }
 
-void Propagator::Propagate(Wave &wave) noexcept
+//------------------------------------------------------------------------------------------------------------------------------
+void Propagator::Propagate(Wave &wave)
 {
 	// We propagate every element while there is elements to propagate.
 	while (propagating.size() != 0)

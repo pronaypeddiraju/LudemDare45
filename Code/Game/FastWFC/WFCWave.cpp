@@ -2,6 +2,7 @@
 
 #include <limits>
 
+//------------------------------------------------------------------------------------------------------------------------------
 namespace
 {
 	//Return distribution * log(distribution)
@@ -28,6 +29,7 @@ namespace
 
 } // namespace
 
+//------------------------------------------------------------------------------------------------------------------------------
 Wave::Wave(unsigned height, unsigned width,
 	const std::vector<double> &patterns_frequencies) noexcept
 	: m_patternsFrequencies(patterns_frequencies),
@@ -55,7 +57,7 @@ Wave::Wave(unsigned height, unsigned width,
 	memoisation.entropy = std::vector<double>(width * height, entropy_base);
 }
 
-
+//------------------------------------------------------------------------------------------------------------------------------
 void Wave::Set(unsigned index, unsigned pattern, bool value) noexcept
 {
 	bool old_value = m_data.Get(index, pattern);
@@ -79,7 +81,7 @@ void Wave::Set(unsigned index, unsigned pattern, bool value) noexcept
 	}
 }
 
-
+//------------------------------------------------------------------------------------------------------------------------------
 int Wave::GetMinEntropy(std::minstd_rand &gen) const noexcept
 {
 	if (m_isImpossible)

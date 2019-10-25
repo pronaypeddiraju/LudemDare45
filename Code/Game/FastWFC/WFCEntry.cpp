@@ -20,6 +20,7 @@ WFCSettings_T gWFCSettings;
 
 bool gStoreAllKernels = true;
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Parse Symmetry name and turn it into a Symmetry Enum value
 Symmetry ToSymmetry(const std::string &symmetryName) 
 {
@@ -50,6 +51,7 @@ Symmetry ToSymmetry(const std::string &symmetryName)
 	throw symmetryName + "is an invalid Symmetry";
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Read the names of the tiles in the subset in Tiling WFC problem
 std::optional<std::unordered_set<std::string>> ReadSubsetNames(XMLElement* root, const std::string &subset) 
 {
@@ -83,8 +85,9 @@ std::optional<std::unordered_set<std::string>> ReadSubsetNames(XMLElement* root,
 	return subsetNames;
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Read all the tiles for a Tiling problem
-std::unordered_map<std::string, Tile<Color>> ReadTiles(XMLElement* root, const std::string &currentDir, const std::string &subset, uint size) 
+std::unordered_map<std::string, Tile<Color>> ReadTiles(XMLElement* root, const std::string &currentDir, const std::string &subset, uint size)
 {
 	std::optional<std::unordered_set<std::string>> subsetNames = ReadSubsetNames(root, subset);
 
@@ -110,7 +113,7 @@ std::unordered_map<std::string, Tile<Color>> ReadTiles(XMLElement* root, const s
 		if (image == std::nullopt) 
 		{
 			std::vector<Array2D<Color>> images;
-			for (unsigned i = 0; i < nb_of_possible_orientations(symmetry); i++) 
+			for (unsigned i = 0; i < NumPossibleOrientations(symmetry); i++)
 			{
 				const std::string subImagePath = currentDir + "/" + name + " " + std::to_string(i) + ".png";
 				std::optional<Array2D<Color>> subImage = ReadImage(subImagePath);
@@ -143,16 +146,18 @@ std::unordered_map<std::string, Tile<Color>> ReadTiles(XMLElement* root, const s
 	return tiles;
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Read the neighbors constraints for a tiling problem
 //Implementation: a value {tile1, orientation1, tile2, orientation2} means tile1 with orientation1 can
 // be placed at the right hand side of tile2 with orientation2
-std::vector<std::tuple<std::string, uint, std::string, uint>> ReadNeighbors(XMLElement* root) 
+//------------------------------------------------------------------------------------------------------------------------------
+std::vector<std::tuple<std::string, uint, std::string, uint>> ReadNeighbors(XMLElement* root)
 {
 	std::vector<std::tuple<std::string, uint, std::string, uint>> neighbors;
 
 	XMLElement* neighborNode = root->FirstChildElement("neighbors");
 
-	for (XMLElement* node = neighborNode->FirstChildElement("neighbor"); node; node = node->NextSiblingElement("neighbor")) 
+	for (XMLElement* node = neighborNode->FirstChildElement("neighbor"); node; node = node->NextSiblingElement("neighbor"))
 	{
 		std::string left = ParseXmlAttribute(*node, "left", "");
 
@@ -182,6 +187,7 @@ std::vector<std::tuple<std::string, uint, std::string, uint>> ReadNeighbors(XMLE
 	return neighbors;
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Read Tiling WFC Problem
 void ReadSimpleTiledInstance(tinyxml2::XMLElement* node, int problemIndex, const std::string &currentDir)
 {
@@ -293,7 +299,7 @@ void ReadSimpleTiledInstance(tinyxml2::XMLElement* node, int problemIndex, const
 
 			break;
 		}
-		else 
+		else
 		{
 			DebuggerPrintf("\n Failed to solve tiling problem: %s subset: %s", name.c_str(), subset.c_str());
 			g_LogSystem->Logf("WFC System", "\n Failed to solve tiling problem: %s subset: %s", name.c_str(), subset.c_str());
@@ -301,6 +307,7 @@ void ReadSimpleTiledInstance(tinyxml2::XMLElement* node, int problemIndex, const
 	}
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Read the overlapping WFC problem from the XML node
 void ReadOverlappingInstance(tinyxml2::XMLElement* node, int problemIndex)
 {
@@ -394,12 +401,14 @@ void ReadOverlappingInstance(tinyxml2::XMLElement* node, int problemIndex)
 	g_LogSystem->Logf("WFC System", "\n Time take for problem: %f", timeTaken);
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 void SetTimeStampedOutPath()
 {
 	gWFCSettings.imageOutPath += GetDateTime();
 	gWFCSettings.imageOutPath += "/";
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Read the config file for the WFC problems
 void ReadConfigFile(const std::string &config_path) noexcept
 {
@@ -448,6 +457,7 @@ void ReadConfigFile(const std::string &config_path) noexcept
 	
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 void WFCEntryPoint()
 {
 	ReadConfigFile(gWFCSettings.configReadPath + gWFCSettings.configFileName);

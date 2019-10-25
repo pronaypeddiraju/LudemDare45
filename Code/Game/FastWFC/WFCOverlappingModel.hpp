@@ -6,6 +6,7 @@
 #include "Game/FastWFC/WFC.hpp"
 #include "Game/FastWFC/WFCColor.hpp"
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Options needed for Overlapping WFC problem
 struct OverlappingWFCOptions
 {
@@ -70,7 +71,7 @@ private:
 	//Calls other constructor with more computed params
 	OverlappingWFC(const Array2D<Color> &input, const OverlappingWFCOptions &options,
 		const int &seed,
-		const std::pair<std::vector<Array2D<Color>>, std::vector<double>> &patterns) noexcept
+		const std::pair<std::vector<Array2D<Color>>, std::vector<double>> &patterns)
 		: OverlappingWFC(input, options, seed, patterns,
 			GenerateCompatible(patterns.first))
 	{
@@ -137,7 +138,7 @@ private:
 	}
 
 	//Return list of patterns as well as their probabilities of appearing
-	static std::pair<std::vector<Array2D<Color>>, std::vector<double>> GetPatterns(const Array2D<Color> &input, const OverlappingWFCOptions &options) noexcept
+	static std::pair<std::vector<Array2D<Color>>, std::vector<double>> GetPatterns(const Array2D<Color> &input, const OverlappingWFCOptions &options)
 	{
 		std::unordered_map<Array2D<Color>, uint> patterns_id;
 		std::vector<Array2D<Color>> patterns;
@@ -217,7 +218,7 @@ private:
 	//Precompute function IsPatternCompatibleWithThisPattern(pattern1, pattern2, dy, dx)
 	//If it returns true then pattern2 is compatible with pattern1 in the direction defined by dy, dx
 	//Add pattern2 to compatible[pattern1][direction]
-	static std::vector<std::array<std::vector<unsigned>, 4>> GenerateCompatible(const std::vector<Array2D<Color>> &patterns) noexcept
+	static std::vector<std::array<std::vector<unsigned>, 4>> GenerateCompatible(const std::vector<Array2D<Color>> &patterns)
 	{
 		std::vector<std::array<std::vector<unsigned>, 4>> compatible = std::vector<std::array<std::vector<unsigned>, 4>>(patterns.size());
 
@@ -240,7 +241,7 @@ private:
 	}
 
 	//Transform a 2D array containing the patterns to a 2D array containing the pixels
-	Array2D<Color> ToImage(const Array2D<unsigned> &output_patterns) const noexcept
+	Array2D<Color> ToImage(const Array2D<unsigned> &output_patterns) const
 	{
 		Array2D<Color> output = Array2D<Color>(m_options.m_outHeight, m_options.m_outWidth);
 
@@ -300,14 +301,14 @@ private:
 
 public:
 	//Constructor used by the user
-	OverlappingWFC(const Array2D<Color> &input, const OverlappingWFCOptions &options, int seed) noexcept
+	OverlappingWFC(const Array2D<Color> &input, const OverlappingWFCOptions &options, int seed)
 		: OverlappingWFC(input, options, seed, GetPatterns(input, options))
 	{
 
 	}
 
 	//Run the WFC algorithm, return the result if succeeded
-	std::optional<Array2D<Color>> Run() noexcept
+	std::optional<Array2D<Color>> Run()
 	{
 		std::optional<Array2D<uint>> result = m_wfc.Run();
 		if (result.has_value())

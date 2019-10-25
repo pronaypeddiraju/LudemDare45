@@ -223,6 +223,7 @@
     <ClInclude Include="FastWFC\WFCDirection.hpp" />
     <ClInclude Include="FastWFC\WFCEntry.hpp" />
     <ClInclude Include="FastWFC\WFCImage.hpp" />
+    <ClInclude Include="FastWFC\WFCMarkovModel.hpp" />
     <ClInclude Include="FastWFC\WFCOverlappingModel.hpp" />
     <ClInclude Include="FastWFC\WFCPropagator.hpp" />
     <ClInclude Include="FastWFC\WFCTilingModel.hpp" />

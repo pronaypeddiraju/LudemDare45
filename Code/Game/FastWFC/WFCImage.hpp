@@ -7,9 +7,9 @@
 #include "WFCColor.hpp"
 #include <optional>
 
-
+//------------------------------------------------------------------------------------------------------------------------------
 //Read an image. Returns nullopt if there was an error.
-std::optional<Array2D<Color>> ReadImage(const std::string& file_path) noexcept
+std::optional<Array2D<Color>> ReadImage(const std::string& file_path)
 {
 	int width;
 	int height;
@@ -37,8 +37,9 @@ std::optional<Array2D<Color>> ReadImage(const std::string& file_path) noexcept
 	return imageArray;
 }
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Write image in png format 
-void WriteImageAsPNG(const std::string& file_path, const Array2D<Color>& imageData) noexcept
+void WriteImageAsPNG(const std::string& file_path, const Array2D<Color>& imageData)
 {
 	stbi_write_png(file_path.c_str(), imageData.m_width, imageData.m_height, 3, (const unsigned char*)imageData.m_data.data(), 0);
 }

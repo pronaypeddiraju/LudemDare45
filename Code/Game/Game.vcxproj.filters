@@ -70,5 +70,6 @@
     <ClInclude Include="FastWFC\WFCImage.hpp" />
     <ClInclude Include="FastWFC\WFCColor.hpp" />
     <ClInclude Include="FastWFC\WFCTilingModel.hpp" />
+    <ClInclude Include="FastWFC\WFCMarkovModel.hpp" />
   </ItemGroup>
 </Project>

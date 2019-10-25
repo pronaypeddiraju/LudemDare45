@@ -3,13 +3,13 @@
 #include <random>
 #include <vector>
 
-/**
- * Struct containing the values needed to compute the entropy of all the cells.
- * This struct is updated every time the wave is changed.
- * p'(pattern) is equal to patterns_frequencies[pattern] if wave.get(cell,
- * pattern) is set to true, otherwise 0.
- */
-struct EntropyMemoisation {
+//------------------------------------------------------------------------------------------------------------------------------
+//Struct containing the values needed to compute the entropy of all the cells
+//This struct is updated every time the wave is changed.
+//p'(pattern) is equal to patterns_frequencies[pattern] if wave.get(cell,
+//pattern) is set to true, otherwise 0.
+struct EntropyMemoisation 
+{
 	std::vector<double> plogp_sum; // The sum of p'(pattern) * log(p'(pattern)).
 	std::vector<double> sum;       // The sum of p'(pattern).
 	std::vector<double> log_sum;   // The log of sum.
@@ -17,6 +17,7 @@ struct EntropyMemoisation {
 	std::vector<double> entropy;       // The entropy of the cell.
 };
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Contains the pattern possibilities in every cell. Also contains info about cell entropy
 class Wave
 {

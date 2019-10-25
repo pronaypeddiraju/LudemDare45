@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Represent color in 24 bit RGB
 struct Color
 {
@@ -17,6 +18,7 @@ struct Color
 	}
 };
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Hash function for color
 //STL needs this to store Color in an unordered_map
 //Using the hash from fast wfc's demo project

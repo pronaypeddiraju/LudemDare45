@@ -8,8 +8,8 @@
 
 typedef unsigned int uint;
 
-//Class containing the generic WFC algorithm.
 //------------------------------------------------------------------------------------------------------------------------------
+//Class containing the generic WFC algorithm.
 class WFC
 {
 private:
@@ -48,9 +48,9 @@ public:
 	//Return value of observe
 	enum ObserveStatus 
 	{
-		success,    // WFC has finished and has succeeded.
-		failure,    // WFC has finished and failed.
-		to_continue // WFC isn't finished.
+		SUCCESS,    // WFC has finished and has succeeded.
+		FAILURE,    // WFC has finished and failed.
+		TO_CONTINUE // WFC isn't finished.
 	};
 
 	//Define the value of the cell with lowest entropy.
